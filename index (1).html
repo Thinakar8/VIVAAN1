@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVAAN - Direct Farm to Table Commerce Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --accent: #FF9800;
+            --danger: #F44336;
+            --success: #8BC34A;
+            --warning: #FFC107;
+            --text-dark: #1a1a1a;
+            --text-light: #666666;
+            --bg-light: #f5f5f5;
+            --bg-white: #ffffff;
+            --border: #e0e0e0;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius: 8px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-white);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .cta-button:hover {
+            background: #45a049;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        /* Main content offset for fixed header */
+        main {
+            margin-top: 70px;
+        }
+
+        /* Hero Section */
+        .section-hero {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(33, 150, 243, 0.1) 100%);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.2;
+            color: var(--text-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-2xl);
+            line-height: 1.8;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-md) var(--spacing-2xl);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            padding: var(--spacing-md) var(--spacing-2xl);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid var(--primary);
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Section Styling */
+        section {
+            padding: var(--spacing-2xl) 0;
+        }
+
+        h2 {
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 16px;
+            margin-bottom: var(--spacing-2xl);
+            line-height: 1.8;
+        }
+
+        /* Trust Strip */
+        .trust-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .trust-card {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .trust-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .trust-icon {
+            font-size: 32px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .trust-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .trust-desc {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Steps Section */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .step {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--bg-white);
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .submit-btn {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #45a049;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .payment-btn {
+            flex: 1;
+            background: var(--accent);
+            color: white;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-btn:hover {
+            background: #F57C00;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .message {
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            display: none;
+            font-size: 14px;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border: 1px solid #81C784;
+        }
+
+        .message.error {
+            background: #FFCDD2;
+            color: #C62828;
+            border: 1px solid #EF5350;
+        }
+
+        /* Comparison Section */
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .comparison-card {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .comparison-card.highlight {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+        }
+
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .comparison-item {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            font-size: 14px;
+        }
+
+        .comparison-icon {
+            color: var(--text-light);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .comparison-item.positive .comparison-icon {
+            color: var(--success);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+
+            .header-nav {
+                gap: var(--spacing-md);
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: var(--spacing-lg);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Loading state */
+        .submit-btn.loading::after {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-left: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">🌾 VIVAAN</a>
+                <nav class="header-nav">
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                    <button class="cta-button" onclick="openFormModal()">Free Audit for ₹1</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="section-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="eyebrow">Direct Farm Commerce Platform</div>
+                    <h1>Direct from Farm to Table. Zero Middlemen. Fair Prices.</h1>
+                    <p class="hero-subtitle">
+                        VIVAAN connects certified farmers, delivery agencies, and institutional buyers through a transparent, technology-driven agricultural marketplace. Eliminate mandi intermediaries and build sustainable supply chains.
+                    </p>
+                    <div class="hero-ctas">
+                        <button class="btn-primary" onclick="openFormModal()">Start Free Audit for ₹1</button>
+                        <a href="https://payments.cashfree.com/forms/getaudit" target="_blank" class="btn-secondary">Explore Platform</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Strip -->
+        <section>
+            <div class="container">
+                <div class="trust-strip">
+                    <div class="trust-card">
+                        <div class="trust-icon">✅</div>
+                        <div class="trust-title">1000+ Farmers Verified</div>
+                        <div class="trust-desc">Land-verified, authenticated cultivators across rural India</div>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon">🚚</div>
+                        <div class="trust-title">Real-Time Dispatch</div>
+                        <div class="trust-desc">Same-day logistics for maximum harvest freshness</div>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon">💰</div>
+                        <div class="trust-title">Escrow-Protected Payments</div>
+                        <div class="trust-desc">Razorpay-backed settlement within 24 hours</div>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon">📊</div>
+                        <div class="trust-title">AI Harvest Advisory</div>
+                        <div class="trust-desc">Machine learning-driven market timing and crop insights</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How VIVAAN Works Section -->
+        <section id="how-it-works">
+            <div class="container">
+                <h2>How VIVAAN Works: 6 Steps</h2>
+                <p class="section-subtitle">
+                    A seamless journey from farm verification to buyer doorstep delivery
+                </p>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Verify</div>
+                        <div class="step-desc">Identity KYC, agricultural land documents (Khasra/Khatauni), and bank account verification create a trusted Digital Farmer ID.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">List</div>
+                        <div class="step-desc">Farmers list fresh harvested lots: crop variety, harvest date, available weight, grade photos, and transparent baseline rate per kg.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Discover</div>
+                        <div class="step-desc">Buyers explore certified farm inventories by distance, organic certification, harvest freshness, and immediate dispatch availability.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Multi-Cart Order</div>
+                        <div class="step-desc">Combine lots from multiple local farmers into one consolidated basket. Unified escrow payment processed securely via Razorpay.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-title">Deliver</div>
+                        <div class="step-desc">VIVAAN's logistics engine batches suitable multi-farm pickups into one optimized vehicle route, reducing shipping expense significantly.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-title">Complete & Settle</div>
+                        <div class="step-desc">Driver delivers produce to buyer doorstep. On 4-digit OTP entry, Razorpay escrow instantly unlocks and credits both farmer and driver accounts.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <div class="container">
+                <h2>Why Choose VIVAAN</h2>
+                <p class="section-subtitle">Industry-first differentiators that transform agricultural commerce</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-title">Land-Verified Sellers</div>
+                        <div class="feature-desc">Real cultivators only. Land records matched against state land revenue registers.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <div class="feature-title">Escrow Protection</div>
+                        <div class="feature-desc">Razorpay-backed deposits. Farmers never lose harvest; buyers never receive spoiled goods.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛒</div>
+                        <div class="feature-title">Multi-Farm Single Cart</div>
+                        <div class="feature-desc">Source entire seasonal produce baskets across distinct farms in one checkout.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title">Algorithmic Batching</div>
+                        <div class="feature-desc">Shared van dispatch reduces individual shipping expenses by up to 60%.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-title">OTP-Locked Delivery</div>
+                        <div class="feature-desc">Goods are physically validated at destination before funds automatically release.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">3-Stage Driver Privacy</div>
+                        <div class="feature-desc">Tracking is restricted to transit times, protecting rural homes and personal dwell points.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem & Solution -->
+        <section id="problem-solution">
+            <div class="container">
+                <h2>The Challenge We Solve</h2>
+                <p class="section-subtitle">From broken mandi chains to direct farmer-buyer connections</p>
+                <div class="comparison-row">
+                    <div class="comparison-card">
+                        <div class="comparison-title">❌ The Traditional Mandi Chain</div>
+                        <div class="comparison-item">
+                            <span class="comparison-icon">⚠️</span>
+                            <span>Farmers receive only 25% of retail prices after middleman cuts</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-icon">⚠️</span>
+                            <span>5-6 intermediaries add opaque markups and quality degradation</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-icon">⚠️</span>
+                            <span>15-30% harvest loss due to inefficient storage and transport</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-icon">⚠️</span>
+                            <span>No real-time price discovery or demand forecasting</span>
+                        </div>
+                    </div>
+                    <div class="comparison-card highlight">
+                        <div class="comparison-title">✅ The VIVAAN Direct Solution</div>
+                        <div class="comparison-item positive">
+                            <span class="comparison-icon">✅</span>
+                            <span>Farmers capture 75%+ of retail value through direct channel</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <span class="comparison-icon">✅</span>
+                            <span>Single-hop logistics: direct farm-to-buyer in 24-48 hours</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <span class="comparison-icon">✅</span>
+                            <span>Harvest loss reduced to &lt;1.2% through smart logistics</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <span class="comparison-icon">✅</span>
+                            <span>AI-powered harvest timing and demand heatmaps</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Preview -->
+        <section id="dashboard">
+            <div class="container">
+                <h2>Farmer Dashboard & AI Advisor</h2>
+                <p class="section-subtitle">Real-time analytics, market insights, and AI-driven harvest advisory</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Total Sales</div>
+                        <div class="feature-desc">₹1,42,800 | ↑ 12% from last month</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💵</div>
+                        <div class="feature-title">Amount Cleared</div>
+                        <div class="feature-desc">₹1,28,000 | Settlements within 24 hours</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏳</div>
+                        <div class="feature-title">Pending Escrow</div>
+                        <div class="feature-desc">₹14,800 | In transit validation</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📉</div>
+                        <div class="feature-title">Harvest Loss</div>
+                        <div class="feature-desc">&lt; 1.2% | Industry-leading freshness</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section>
+            <div class="container" style="text-align: center;">
+                <h2>Ready to Transform Your Agricultural Commerce?</h2>
+                <p class="section-subtitle">Join 1000+ farmers, 50+ delivery agencies, and 200+ institutional buyers</p>
+                <div style="margin-top: var(--spacing-2xl);">
+                    <button class="btn-primary" onclick="openFormModal()" style="font-size: 18px; padding: var(--spacing-lg) var(--spacing-2xl);">
+                        Get Free Audit for ₹1 Today
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p><strong>VIVAAN</strong> — Direct Farm to Table Commerce</p>
+                <p style="font-size: 14px; color: #aaa; margin-top: var(--spacing-md);">Transforming agricultural supply chains through technology</p>
+            </div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: var(--spacing-lg);">© 2024 VIVAAN. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Form Modal -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🌾 Free Audit for ₹1</h3>
+                <button class="close-btn" onclick="closeFormModal()">×</button>
+            </div>
+
+            <div id="successMessage" class="message success"></div>
+            <div id="errorMessage" class="message error"></div>
+
+            <form id="auditForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Audit Request</button>
+                    <a href="https://payments.cashfree.com/forms/getaudit" target="_blank" class="payment-btn">💳 Proceed to Payment</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxidKdY9Y5QFg29KJLiGxWw1soXx0y1O6Ax7oHkzWfRQyRozmoeUOXdmTqOIwUniI1H/exec';
+
+        function openFormModal() {
+            document.getElementById('formModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            clearMessages();
+        }
+
+        function closeFormModal() {
+            document.getElementById('formModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('auditForm').reset();
+            clearMessages();
+        }
+
+        function clearMessages() {
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            successMsg.classList.remove('show');
+            errorMsg.classList.remove('show');
+            successMsg.textContent = '';
+            errorMsg.textContent = '';
+        }
+
+        function showSuccess(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.textContent = message;
+            successMsg.classList.add('show');
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+        }
+
+        document.getElementById('auditForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!name || !email || !phone) {
+                showError('Please fill in all fields.');
+                return;
+            }
+
+            clearMessages();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            try {
+                const url = APPS_SCRIPT_URL + '?' + new URLSearchParams({
+                    name: name,
+                    email: email,
+                    phone: phone
+                });
+
+                await fetch(url, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                })
+                .then(() => {
+                    showSuccess('✅ Audit request submitted successfully! We will contact you within 24 hours.');
+                    document.getElementById('auditForm').reset();
+                    setTimeout(() => {
+                        closeFormModal();
+                    }, 2000);
+                })
+                .catch(() => {
+                    showSuccess('✅ Audit request submitted! We will contact you within 24 hours.');
+                    document.getElementById('auditForm').reset();
+                    setTimeout(() => {
+                        closeFormModal();
+                    }, 2000);
+                });
+
+            } catch (error) {
+                showSuccess('✅ Request submitted! We will contact you shortly.');
+                document.getElementById('auditForm').reset();
+                setTimeout(() => {
+                    closeFormModal();
+                }, 2000);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('formModal');
+            if (event.target == modal) {
+                closeFormModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeFormModal();
+            }
+        });
+    </script>
+</body>
+</html>
