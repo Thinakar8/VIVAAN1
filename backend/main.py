@@ -7,6 +7,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import sys
+
+# Ensure backend directory is in sys.path when imported as a package
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+if BACKEND_DIR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR)
 
 from database import init_db
 from routers import auth, farmers, agencies, drivers, buyers, orders, admin, i18n, routing
@@ -41,6 +47,10 @@ app.include_router(i18n.router)
 app.include_router(routing.router)
 
 # Mount Frontend static files
+CLIENT_DIST = os.path.join(PROJECT_ROOT, "client", "dist")
+if os.path.exists(os.path.join(CLIENT_DIST, "assets")):
+    app.mount("/assets", StaticFiles(directory=os.path.join(CLIENT_DIST, "assets")), name="client-assets")
+
 if os.path.exists(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
@@ -50,6 +60,9 @@ def on_startup():
 
 @app.get("/")
 def serve_index():
+    client_index = os.path.join(CLIENT_DIST, "index.html")
+    if os.path.exists(client_index):
+        return FileResponse(client_index)
     root_index = os.path.join(PROJECT_ROOT, "index.html")
     if os.path.exists(root_index):
         return FileResponse(root_index)
