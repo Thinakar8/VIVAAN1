@@ -52,14 +52,14 @@ export default function OrderTrackingView() {
   // 1. Fetch Order & Live Telemetry
   const loadOrderAndTelemetry = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/track`);
+      const res = await fetch(`/api/orders/${currentOrderId}/track`);
       const data = await res.json();
       if (data.success) {
         setOrder(data.order);
         setBuyerGpsShared(Boolean(data.order.buyer_location_shared));
       }
 
-      const tRes = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/live-tracking?role=${roleName}`);
+      const tRes = await fetch(`/api/orders/${currentOrderId}/live-tracking?role=${roleName}`);
       const tData = await tRes.json();
       if (tData.success) {
         setTelemetry(tData);
@@ -120,7 +120,7 @@ export default function OrderTrackingView() {
   // Driver Action: Accept Order
   const handleDriverAccept = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/accept-order`, {
+      const res = await fetch(`/api/orders/${currentOrderId}/accept-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ driver_id: 'VIV-DR-104582', driver_name: 'Murugan Karuppasamy' })
@@ -144,7 +144,7 @@ export default function OrderTrackingView() {
   // Driver Action: Confirm Farmgate Pickup (COLLECT / PICKED UP)
   const handleDriverPickup = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/confirm-pickup`, {
+      const res = await fetch(`/api/orders/${currentOrderId}/confirm-pickup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -197,7 +197,7 @@ export default function OrderTrackingView() {
   const submitBuyerGps = async (lat, lng) => {
     setBuyerGpsShared(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/share-buyer-location`, {
+      const res = await fetch(`/api/orders/${currentOrderId}/share-buyer-location`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -250,7 +250,7 @@ export default function OrderTrackingView() {
 
   const pushGpsUpdate = async (lat, lng, speed = 40, heading = 45) => {
     try {
-      await fetch(`http://localhost:5000/api/orders/${currentOrderId}/update-location`, {
+      await fetch(`/api/orders/${currentOrderId}/update-location`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ latitude: lat, longitude: lng, speed, heading, driver_id: 'VIV-DR-104582' })
@@ -280,7 +280,7 @@ export default function OrderTrackingView() {
 
     setVerifyingOtp(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${currentOrderId}/verify-otp`, {
+      const res = await fetch(`/api/orders/${currentOrderId}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

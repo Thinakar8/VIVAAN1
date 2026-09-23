@@ -25,7 +25,7 @@ export default function DriverPortal() {
 
   const loadDriverData = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/drivers/${driverId}`);
+      const res = await fetch(`/api/drivers/${driverId}`);
       const data = await res.json();
       if (data.success) {
         setDriver(data.driver);
@@ -66,7 +66,7 @@ export default function DriverPortal() {
 
     try {
       const orderId = activeOrder?.id || 'VIV-ORD-88120';
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/verify-otp`, {
+      const res = await fetch(`/api/orders/${orderId}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

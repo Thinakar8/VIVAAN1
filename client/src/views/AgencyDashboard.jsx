@@ -34,7 +34,7 @@ export default function AgencyDashboard() {
 
   const loadAgencyData = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/agencies/${agencyId}`);
+      const res = await fetch(`/api/agencies/${agencyId}`);
       const data = await res.json();
       if (data.success) {
         setAgency(data.agency);
@@ -58,7 +58,7 @@ export default function AgencyDashboard() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register-driver', {
+      const res = await fetch('/api/auth/register-driver', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -91,7 +91,7 @@ export default function AgencyDashboard() {
   const handleOptimizeRoute = async () => {
     setOptimizing(true);
     try {
-      const res = await fetch('http://localhost:5000/api/routing/optimize', {
+      const res = await fetch('/api/routing/optimize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

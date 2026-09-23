@@ -45,15 +45,15 @@ export default function FarmerDashboard() {
 
   const loadData = async () => {
     try {
-      const pRes = await fetch(`http://localhost:5000/api/farmers/${farmerId}/products`);
+      const pRes = await fetch(`/api/farmers/${farmerId}/products`);
       const pData = await pRes.json();
       if (pData.success) setFarmerProducts(pData.products || []);
 
-      const oRes = await fetch(`http://localhost:5000/api/farmers/${farmerId}/orders`);
+      const oRes = await fetch(`/api/farmers/${farmerId}/orders`);
       const oData = await oRes.json();
       if (oData.success) setFarmerOrders(oData.orders || []);
 
-      const wRes = await fetch(`http://localhost:5000/api/weather?district=Salem`);
+      const wRes = await fetch(`/api/weather?district=Salem`);
       const wData = await wRes.json();
       if (wData.success) setWeatherData(wData);
     } catch (err) {
@@ -73,7 +73,7 @@ export default function FarmerDashboard() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/products', {
+      const res = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -105,7 +105,7 @@ export default function FarmerDashboard() {
   const handleConsultAi = async () => {
     setAiLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/ai/crop-recommendation', {
+      const res = await fetch('/api/ai/crop-recommendation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

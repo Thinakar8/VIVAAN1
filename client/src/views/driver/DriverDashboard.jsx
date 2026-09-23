@@ -89,7 +89,7 @@ export default function DriverDashboard() {
       const orderNumber = orderId.includes('VIV-ORD-') ? orderId : `VIV-ORD-${orderId.replace('order_', '')}`;
       setActiveOrderId(orderNumber);
       try {
-        await fetch(`http://localhost:5000/api/orders/${orderNumber}/accept-order`, {
+        await fetch(`/api/orders/${orderNumber}/accept-order`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -117,7 +117,7 @@ export default function DriverDashboard() {
     try {
       const orderNumber = orderId.includes('VIV-ORD-') ? orderId : `VIV-ORD-${orderId.replace('order_', '')}`;
       try {
-        await fetch(`http://localhost:5000/api/orders/${orderNumber}/confirm-pickup`, {
+        await fetch(`/api/orders/${orderNumber}/confirm-pickup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });

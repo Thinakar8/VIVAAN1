@@ -1551,12 +1551,17 @@ if (fs.existsSync(clientDistPath)) {
 }
 
 // Start Server
-app.listen(PORT, () => {
-  console.log('====================================================');
-  console.log(`🌾 VIVAAN Agricultural Marketplace Backend API`);
-  console.log(`🚀 Server listening on port ${PORT}`);
-  console.log(`👉 http://localhost:${PORT}/api/health`);
-  console.log(`👉 Web Portal: http://localhost:${PORT}`);
-  console.log('====================================================');
-});
+if (require.main === module || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log('====================================================');
+    console.log(`🌾 VIVAAN Agricultural Marketplace Backend API`);
+    console.log(`🚀 Server listening on port ${PORT}`);
+    console.log(`👉 http://localhost:${PORT}/api/health`);
+    console.log(`👉 Web Portal: http://localhost:${PORT}`);
+    console.log('====================================================');
+  });
+}
+
+module.exports = app;
+
 

@@ -33,7 +33,7 @@ export default function CartCheckoutModal() {
 
     try {
       // Step 1: Create payment intent
-      const pRes = await fetch('http://localhost:5000/api/payments/create-order', {
+      const pRes = await fetch('/api/payments/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount_inr: grandTotal })
@@ -41,7 +41,7 @@ export default function CartCheckoutModal() {
       const pData = await pRes.json();
 
       // Step 2: Create multi-farmer order in VIVAAN system
-      const oRes = await fetch('http://localhost:5000/api/orders', {
+      const oRes = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

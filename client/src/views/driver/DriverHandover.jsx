@@ -47,7 +47,7 @@ export default function DriverHandover() {
     setIsSubmitting(true);
     try {
       // 1. Verify OTP with backend API
-      const res = await fetch(`http://localhost:5000/api/orders/${targetOrderNumber}/verify-otp`, {
+      const res = await fetch(`/api/orders/${targetOrderNumber}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

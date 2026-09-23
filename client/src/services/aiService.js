@@ -7,7 +7,7 @@
  * Includes resilient fallbacks if backend connection is unavailable.
  */
 
-const API_BASE_URL = 'http://localhost:5000/api/ai';
+const API_BASE_URL = '/api/ai';
 
 export const aiService = {
   // ===========================================================

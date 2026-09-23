@@ -130,7 +130,7 @@ export default function BuyerCart() {
 
       // 2. Also notify backend API
       try {
-        await fetch('http://localhost:5000/api/orders', {
+        await fetch('/api/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -194,7 +194,7 @@ export default function BuyerCart() {
 
     try {
       // Step 1: Initialize Payment Intent on Backend (Strict Security: Secret stays on server!)
-      const intentRes = await fetch('http://localhost:5000/api/payments/create-order', {
+      const intentRes = await fetch('/api/payments/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -234,7 +234,7 @@ export default function BuyerCart() {
           handler: async function (response) {
             // Server-side signature verification
             try {
-              const verifyRes = await fetch('http://localhost:5000/api/payments/verify-signature', {
+              const verifyRes = await fetch('/api/payments/verify-signature', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -307,7 +307,7 @@ export default function BuyerCart() {
       const mockSignature = `test_sig_${Date.now()}`;
 
       try {
-        const verifyRes = await fetch('http://localhost:5000/api/payments/verify-signature', {
+        const verifyRes = await fetch('/api/payments/verify-signature', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

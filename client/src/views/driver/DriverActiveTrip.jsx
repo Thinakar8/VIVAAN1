@@ -14,12 +14,12 @@ export default function DriverActiveTrip() {
   const orderId = activeOrderId || 'VIV-ORD-88120';
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/orders/${orderId}/track`)
+    fetch(`/api/orders/${orderId}/track`)
       .then(r => r.json())
       .then(d => { if (d.success) setActiveOrder(d.order); })
       .catch(() => {});
 
-    fetch(`http://localhost:5000/api/orders/${orderId}/live-tracking?role=DRIVER`)
+    fetch(`/api/orders/${orderId}/live-tracking?role=DRIVER`)
       .then(r => r.json())
       .then(d => { if (d.success) setTelemetry(d); })
       .catch(() => {});
@@ -27,7 +27,7 @@ export default function DriverActiveTrip() {
 
   const handleConfirmPickup = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/confirm-pickup`, {
+      const res = await fetch(`/api/orders/${orderId}/confirm-pickup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });

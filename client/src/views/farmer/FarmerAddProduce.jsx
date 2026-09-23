@@ -59,7 +59,7 @@ export default function FarmerAddProduce() {
 
       // 2. Also notify backend API
       try {
-        await fetch('http://localhost:5000/api/products', {
+        await fetch('/api/products', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

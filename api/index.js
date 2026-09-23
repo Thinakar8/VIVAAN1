@@ -1,0 +1,6 @@
+// Vercel Serverless Function entrypoint for VIVAAN Express API
+const app = require('../server/server');
+
+module.exports = (req, res) => {
+  return app(req, res);
+};
