@@ -17,7 +17,7 @@ echo [2/3] Verifying Remote:
 git remote -v
 echo.
 
-echo [3/3] Pushing 'main' branch to https://github.com/Thinakar8/VIVAAN-WEB-WEB.git ...
+echo [3/3] Pushing 'main' branch to https://github.com/Thinakar8/VIVAAN-WEB.git ...
 echo If prompted, sign in via your browser or paste your Personal Access Token.
 echo.
 
@@ -27,7 +27,7 @@ if %ERRORLEVEL% EQU 0 (
     echo.
     echo ====================================================================
     echo   SUCCESS: Project successfully pushed to GitHub!
-    echo   Repository URL: https://github.com/Thinakar8/VIVAAN-WEB
+    echo   Repository URL: https://github.com/Thinakar8/VIVAAN
     echo ====================================================================
 ) else (
     echo.
