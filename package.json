@@ -1,0 +1,23 @@
+{
+  "name": "vivaan-marketplace",
+  "version": "2.0.0",
+  "description": "VIVAAN – Direct Farmer-to-Buyer Digital Agricultural Marketplace",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "test": "node server/test_e2e.js"
+  },
+  "keywords": [
+    "agritech",
+    "direct-agri-commerce",
+    "agriculture",
+    "farmers",
+    "marketplace",
+    "logistics",
+    "escrow"
+  ],
+  "author": "VIVAAN Team",
+  "license": "MIT"
+}

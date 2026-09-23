@@ -1,0 +1,223 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // VIVAAN Agricultural Marketplace - Firestore Security Rules
+    // Role-Based Access Control (RBAC) & Document Privacy Enforcer
+    // =========================================================================
+
+    // --- Helper Functions ---
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function getUserRole() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? getUserData().role
+        : (request.auth.token.role != null ? request.auth.token.role : 'anonymous');
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (getUserRole() == 'admin' || request.auth.token.admin == true);
+    }
+
+    function isFarmer() {
+      return isAuthenticated() && (getUserRole() == 'farmer' || request.auth.token.role == 'farmer');
+    }
+
+    function isBuyer() {
+      return isAuthenticated() && (getUserRole() == 'buyer' || request.auth.token.role == 'buyer');
+    }
+
+    function isAgency() {
+      return isAuthenticated() && (getUserRole() == 'agency' || request.auth.token.role == 'agency');
+    }
+
+    function isDriver() {
+      return isAuthenticated() && (getUserRole() == 'driver' || request.auth.token.role == 'driver');
+    }
+
+    // =========================================================================
+    // 1. users: User authentication profiles with assigned role
+    // =========================================================================
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isOwner(userId) && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 2. farmers: Farmer agricultural directory
+    // =========================================================================
+    match /farmers/{farmerId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (isFarmer() || isAdmin());
+      allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 3. farmerVerification: SENSITIVE - Land patta audit & Aadhaar hashes
+    // =========================================================================
+    match /farmerVerification/{verificationId} {
+      // Strictly private: accessible ONLY by owner farmer and VIVAAN Admin
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && (isFarmer() && request.resource.data.userId == request.auth.uid || isAdmin());
+      allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 4. landRecords: SENSITIVE - Government Survey No, Patta extent & title
+    // =========================================================================
+    match /landRecords/{recordId} {
+      // Strictly private: accessible ONLY by owner farmer and VIVAAN Admin
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && (isFarmer() && request.resource.data.userId == request.auth.uid || isAdmin());
+      allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 5. farmerProducts: Direct harvest produce catalog
+    // =========================================================================
+    match /farmerProducts/{productId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && (isFarmer() || isAdmin());
+      allow update, delete: if isAuthenticated() && (resource.data.userId == request.auth.uid || resource.data.farmerId == request.auth.uid || isAdmin());
+    }
+
+    // =========================================================================
+    // 6. buyers: Consumer & Bulk buyer profiles
+    // =========================================================================
+    match /buyers/{buyerId} {
+      allow read, write: if isAuthenticated() && (resource.data.userId == request.auth.uid || request.resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && (isBuyer() || isAdmin());
+    }
+
+    // =========================================================================
+    // 7. deliveryAgencies: Rural freight & cold-chain carriers
+    // =========================================================================
+    match /deliveryAgencies/{agencyId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAgency() || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 8. drivers: Logistics drivers & commercial licenses
+    // =========================================================================
+    match /drivers/{driverId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        isAgency() ||
+        isAdmin()
+      );
+      allow create, update: if isAuthenticated() && (isAgency() || isDriver() || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 9. vehicles: Carrier fleet vehicles & cold storage capacity
+    // =========================================================================
+    match /vehicles/{vehicleId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && (isAgency() || isAdmin());
+    }
+
+    // =========================================================================
+    // 10. orders: Multi-farmer consignments & delivery contracts
+    // =========================================================================
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.assignedDriverId == request.auth.uid ||
+        resource.data.assignedAgencyId == request.auth.uid ||
+        isAgency() ||
+        isAdmin()
+      );
+      allow create: if isAuthenticated() && (isBuyer() || isAdmin());
+      allow update: if isAuthenticated() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.assignedDriverId == request.auth.uid ||
+        isAgency() ||
+        isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 11. payments: SENSITIVE - Razorpay escrow transactions & bank releases
+    // =========================================================================
+    match /payments/{paymentId} {
+      // Strictly private: readable only by transaction buyer, recipient farmer, and admin
+      allow read: if isAuthenticated() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.farmerId == request.auth.uid ||
+        isAdmin()
+      );
+      allow write: if isAdmin();
+    }
+
+    // =========================================================================
+    // 12. tracking: Dispatch telemetry milestones & delivery audit
+    // =========================================================================
+    match /tracking/{trackingId} {
+      allow read: if isAuthenticated() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.driverId == request.auth.uid ||
+        isAgency() ||
+        isAdmin()
+      );
+      allow write: if isAuthenticated() && (
+        resource.data.driverId == request.auth.uid ||
+        isDriver() ||
+        isAdmin()
+      );
+    }
+
+    // =========================================================================
+    // 13. ratings: Farmer, driver, and produce quality feedback
+    // =========================================================================
+    match /ratings/{ratingId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && (isBuyer() || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // 14. notifications: Targeted user alerts & dispatch updates
+    // =========================================================================
+    match /notifications/{notificationId} {
+      allow read, update, delete: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated();
+    }
+
+    // =========================================================================
+    // 15. aiInsights: Soil health advisory, Mandi price & demand forecasting
+    // =========================================================================
+    match /aiInsights/{insightId} {
+      allow read: if isAuthenticated() && (
+        resource.data.farmerId == request.auth.uid ||
+        resource.data.userId == request.auth.uid ||
+        isFarmer() ||
+        isAdmin()
+      );
+      allow write: if isAdmin();
+    }
+
+  }
+}

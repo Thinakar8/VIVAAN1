@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIVAAN – Direct Farmer-to-Buyer Digital Marketplace</title>
+  
+  <!-- VIVAAN Brand Favicon -->
+  <link rel="icon" type="image/jpeg" href="/static/assets/vivaan-logo.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            vivaan: {
+              dark: '#1b4332',
+              green: '#2d6a4f',
+              light: '#52b788',
+              gold: '#d4a373',
+              cream: '#fefae0'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- VIVAAN Custom Styling -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#f8faf7] text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+  
+  <!-- Root Single Page Application Mount -->
+  <div id="vivaan-root">
+    <div class="min-h-screen flex items-center justify-center">
+      <div class="text-center space-y-3">
+        <img src="/static/assets/vivaan-logo.jpg" alt="VIVAAN" class="h-20 w-20 mx-auto rounded-full shadow-lg border-2 border-amber-300 animate-pulse" />
+        <h2 class="text-xl font-bold text-emerald-950">Loading VIVAAN...</h2>
+        <p class="text-xs text-slate-400">Direct Farmer-to-Buyer Digital Agricultural Marketplace</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* VIVAAN Custom Styling & Agricultural Theme */
+:root {
+  --vivaan-green-dark: #1b4332;
+  --vivaan-green-primary: #2d6a4f;
+  --vivaan-green-light: #52b788;
+  --vivaan-gold: #d4a373;
+  --vivaan-cream: #fefae0;
+  --vivaan-bg: #f8faf7;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: var(--vivaan-bg);
+  color: #1f2937;
+}
+
+/* Glassmorphism effects */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+/* Digital ID Card Styles */
+.id-card-farmer {
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 65%, #1e3a2b 100%);
+  border: 2px solid #d4a373;
+  box-shadow: 0 16px 36px -8px rgba(27, 67, 50, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.id-card-farmer::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(212, 163, 115, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Delivery Agency 3-Tier ID Cards */
+.id-card-agency-local {
+  background: linear-gradient(135deg, #064e3b 0%, #059669 70%, #10b981 100%);
+  border: 2px solid #34d399;
+  box-shadow: 0 16px 32px -8px rgba(5, 150, 105, 0.35);
+}
+
+.id-card-agency-district {
+  background: linear-gradient(135deg, #78350f 0%, #d97706 70%, #f59e0b 100%);
+  border: 2px solid #fbbf24;
+  box-shadow: 0 16px 32px -8px rgba(217, 119, 6, 0.35);
+}
+
+.id-card-agency-state {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 70%, #3b82f6 100%);
+  border: 2px solid #60a5fa;
+  box-shadow: 0 16px 32px -8px rgba(37, 99, 235, 0.35);
+}
+
+/* Driver ID Card */
+.id-card-driver {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 70%, #6366f1 100%);
+  border: 2px solid #818cf8;
+  box-shadow: 0 16px 32px -8px rgba(67, 56, 202, 0.35);
+}
+
+/* Badge Hologram Simulation */
+.hologram-seal {
+  background: linear-gradient(45deg, #fef08a, #fed7aa, #bbf7d0, #bfdbfe);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Progress Stepper */
+.stepper-circle {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.stepper-circle.active {
+  background-color: #1b4332;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.2);
+}
+
+.stepper-circle.completed {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.stepper-circle.inactive {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}
+
+/* Animated pulse for active orders */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-active {
+  animation: pulse-ring 2s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+/* Leaflet Map container */
+#delivery-map {
+  height: 380px;
+  width: 100%;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

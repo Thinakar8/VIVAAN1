@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (request.auth.token.role == 'admin' || request.auth.token.admin == true);
+    }
+
+    // Produce catalog photos: Publicly readable, uploadable by authenticated farmers
+    match /produce/{productId}/{allImages=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // SENSITIVE: Farmer KYC & Land Patta documentation: strictly private to owner & admin
+    match /verification/{userId}/{allDocs=**} {
+      allow read, write: if isAuthenticated() && (request.auth.uid == userId || isAdmin())
+                         && request.resource.size < 10 * 1024 * 1024;
+    }
+
+    // SENSITIVE: Commercial Driver Licenses & Vehicle RC: private to driver, agency & admin
+    match /driver_docs/{driverId}/{allDocs=**} {
+      allow read, write: if isAuthenticated() && (
+        request.auth.uid == driverId ||
+        request.auth.token.role == 'agency' ||
+        isAdmin()
+      );
+    }
+  }
+}
