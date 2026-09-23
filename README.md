@@ -40,7 +40,7 @@
 ### 1. Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/Thinakar8/VIVAAN.git
+git clone https://github.com/Thinakar8/VIVAAN-WEB-WEB.git
 cd VIVAAN
 
 # Install client dependencies
